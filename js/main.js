@@ -9,11 +9,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // 为导航链接添加平滑滚动效果
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            const targetSelector = this.getAttribute('href');
+
+            // Ignore placeholders like '#' that have no target element
+            if (!targetSelector || targetSelector === '#') {
+                e.preventDefault();
+                return;
+            }
+
             e.preventDefault();
-            
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const targetElement = document.querySelector(targetSelector);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 });
